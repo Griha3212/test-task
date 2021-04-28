@@ -7,13 +7,10 @@
 import http from "http";
 // import https from "https";
 import fs from "fs";
-// import * as io from 'socket.io';
+
 import chalk from "chalk";
-import { Server } from "socket.io";
-import path from "path";
-import mongoose from "mongoose";
+
 import { app } from "./app.js";
-import { seedUsersData } from "./seeds/seedUsers";
 
 /* eslint-disable no-console */
 
