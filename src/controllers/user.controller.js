@@ -15,7 +15,6 @@ export const getUsersWithRankMoreEqual20 = async (req, res, next) => {
       .then((resp) => resp.json())
       .then((data) => {
         amountOfRequests = Math.ceil(data.total / 20);
-
         receivedAllUsers = [...data.users];
       });
 
