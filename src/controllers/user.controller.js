@@ -3,7 +3,7 @@
 /* eslint-disable no-plusplus */
 import fetch from "node-fetch";
 
-export const getUsersWithRankMoreThan20 = async (req, res, next) => {
+export const getUsersWithRankMoreEqual20 = async (req, res, next) => {
   try {
     const url = "/users?offset=0";
 
