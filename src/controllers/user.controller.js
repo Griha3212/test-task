@@ -10,7 +10,7 @@ export const getUsersWithRankMoreThan20 = async (req, res, next) => {
     let amountOfRequests;
 
     let receivedAllUsers;
-
+    // find out the number of requests and save the data from the first one
     await fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
@@ -19,6 +19,8 @@ export const getUsersWithRankMoreThan20 = async (req, res, next) => {
         receivedAllUsers = [...data.users];
       });
 
+    // it can be promise all, but i don't want to overload server
+    // load and save other data
     for (let index = 1; index < amountOfRequests; index++) {
       await fetch(`/users?offset=${index}`)
         .then((resp) => resp.json())
@@ -27,6 +29,7 @@ export const getUsersWithRankMoreThan20 = async (req, res, next) => {
         });
     }
 
+    // filter by rank
     const dataToSend = receivedAllUsers.filter((element) => element.rank >= 20);
 
     res.status(200).send(dataToSend);
@@ -34,35 +37,3 @@ export const getUsersWithRankMoreThan20 = async (req, res, next) => {
     next(error);
   }
 };
-
-// export const getUsersWithRankMoreThan20 = async (req, res, next) => {
-//   try {
-//     // to do change api
-//     const url = "https://randomuser.me/api/?results=1";
-
-//     const amountOfRequests = 3;
-
-//     let receivedAllUsers;
-
-//     await fetch(url)
-//       .then((resp) => resp.json())
-//       .then((data) => {
-//         receivedAllUsers = [...data.results];
-//       });
-
-//     for (let index = 1; index < amountOfRequests; index++) {
-//       await fetch(`https://randomuser.me/api/?results=${index}`)
-//         .then((resp) => resp.json())
-//         .then((data) => {
-//           console.log("index :>> ", index);
-//           receivedAllUsers = [...receivedAllUsers, ...data.results];
-//         });
-//     }
-
-//     // const dataToSend = receivedAllUsers.filter((element) => element.rank >= 20);
-
-//     res.status(200).send(receivedAllUsers);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
